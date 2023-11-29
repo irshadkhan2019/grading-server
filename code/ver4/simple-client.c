@@ -1,4 +1,4 @@
-/* run client using: ./client localhost <server_port> */
+/* run client using: ./client localhost <server_port> <prog_file> <loop_no> <sleep_time> <new/status> */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 #include <errno.h> 
 
 
-void error(char *msg) {
+void error(const char *msg) {
   perror(msg);
   exit(0);
 }
@@ -63,15 +63,15 @@ int main(int argc, char *argv[]) {
   }
   
   /* create socket, get sockfd handle */
+  // printf("%s",check);
 
 
-
-  gettimeofday(&tvloopstart, NULL);
-
+gettimeofday(&tvloopstart, NULL);
   for(int i=0;i<loops;i++){
 
   sockfd = socket(AF_INET, SOCK_STREAM, 0); //create the half socket. 
   //AF_INET means Address Family of INTERNET. SOCK_STREAM creates TCP socket (as opposed to UDP socket)
+
 
   if (sockfd < 0)
     error("ERROR opening socket");
@@ -107,10 +107,17 @@ to sin_addr.s_addr of serv_addr structure */
   if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
     error("ERROR connecting");
 
+  //If here means connection was complete
+
+  /* ask user for input */
+ // adding loop
+
+//measure loop time 
 
 
   int fd = open(c_file, O_RDONLY);
-
+  //int bytesread ;
+  //printf("Please enter the message: ");
   bzero(buffer, 1024);
 
   if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) < 0) {
@@ -127,7 +134,14 @@ to sin_addr.s_addr of serv_addr structure */
   n = write(sockfd, buffer, bytesread); 
 
   close(fd);
- 
+  //printf("Please enter the message: ");
+  //bzero(buffer, 256); //reset buffer to zero
+  //fgets(buffer, 255, stdin); //read message from stdin, into buffer
+
+  /* send user message to server 
+  write call: first argument is socket FD, 2nd is the string to write, 3rd is length of 2nd
+  */
+  //n = write(sockfd, buffer, strlen(buffer));
 
   if (n < 0)
     error("ERROR writing to socket");
@@ -137,11 +151,10 @@ to sin_addr.s_addr of serv_addr structure */
   First argument is socket, 2nd is string to read into, 3rd is number of bytes to read
   */
 
-  // client gets tokenId to check status
   n = read(sockfd, buffer, 1024);
-   if((strcmp(check, "new") == 0)){
+  if((strcmp(check, "new") == 0)){
         printf("Server response: %s\n", buffer);
-  }
+   }
 
 
   if((strcmp(check, "new") == 0)){
@@ -152,7 +165,7 @@ to sin_addr.s_addr of serv_addr structure */
     n = write(sockfd, my_token, sizeof(my_token)); 
     bzero(buffer, 1024);
     n = read(sockfd, buffer, 1024);
-    printf("Server status response: %s\n", buffer);
+     printf("Server status response: %s\n", buffer);
 
   }
 
@@ -193,7 +206,7 @@ elapsed=timedifference_msec(tvloopstart, tvloopend);
 
 printf("AVG response time: %f msec\n", totalresponsetime/loops);
 printf("Successful Response: %d\n", successres);
-printf("Time taken for completing loop : %f msec\n",elapsed);
+printf("Time take for completing loop : %f msec\n",elapsed);
 return 0;
 
 }

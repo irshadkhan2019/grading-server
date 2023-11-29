@@ -1,0 +1,9 @@
+
+RUNTIME ERROR :
+ 
+RUNTIME ERROR :
+ ./Submissions/1701086610_4/file1701086610_4.c: In function ‘int main()’:
+./Submissions/1701086610_4/file1701086610_4.c:8:8: warning: division by zero [-Wdiv-by-zero]
+    8 | int i=1/0;
+      |       ~^~
+Floating point exception (core dumped)

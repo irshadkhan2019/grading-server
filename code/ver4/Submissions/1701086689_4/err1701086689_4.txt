@@ -1,0 +1,12 @@
+
+COMPILATION ERROR :
+ 
+COMPILATION ERROR :
+ ./Submissions/1701086689_4/file1701086689_4.c: In function ‘int main()’:
+./Submissions/1701086689_4/file1701086689_4.c:9:9: error: expected ‘;’ before ‘}’ token
+    9 | return 0
+      |         ^
+      |         ;
+   10 | 
+   11 | }
+      | ~        

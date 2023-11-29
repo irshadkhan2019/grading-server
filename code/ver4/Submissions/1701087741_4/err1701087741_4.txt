@@ -1,0 +1,39 @@
+
+RUNTIME ERROR :
+ 
+RUNTIME ERROR :
+ 
+RUNTIME ERROR :
+ sh: 1: ./Submissions/1701087741_4/exec1701087741_4: Permission denied
+Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busy
+4: Permission denied
+Text file busy
+4: Text file busy
+4: Permission denied
+Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busy
+_4/exec1701087741_4: Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busy
+4: Text file busysh: 1: 
+./Submissions/1701087741_4/exec1701087741_4: Text file busy
+issions/1701087741_4/exec1701087741_4: Text file busy
+busy
+4: Text file busy
+_4/exec1701087741_sh: 1: ./Submissions/1701087741_4/exec1701087741_4: Permission denied
+/1701087742_4’: File exists
+sh: 1: ./Submissions/1701087741_4/exec1701087741_sh: 1: ./Submissions/1701087741_4/exec1701087741_4: Text file busy
+87741_4/exec1701087741_4: Text file busy
+4’: File exists
+42_4’: File exists
+rectory ‘./Submissions/1701087742_4’: File exists
+exec1701087741_4: Text file bus

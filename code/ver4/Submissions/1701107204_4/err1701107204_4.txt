@@ -1,9 +1,0 @@
-
-COMPILATION ERROR :
- ./Submissions/1701107204_4/file1701107204_4.c: In function ‘int main()’:
-./Submissions/1701107204_4/file1701107204_4.c:6:22: error: expected ‘;’ before ‘}’ token
-    6 |     printf("%d ",i+1)
-      |                      ^
-      |                      ;
-    7 | }
-      | ~                     

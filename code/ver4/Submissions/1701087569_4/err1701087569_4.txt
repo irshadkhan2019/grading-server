@@ -1,0 +1,18 @@
+
+RUNTIME ERROR :
+ mkdir: cannot create directory ‘./Submissions/1701087570_4’: File exists
+sh: 1: ./Submissions/1701087569_4/exec1701087569_4: Text file busy
+4: Text file busy
+issions/1701087569_4/exec1701087569_4: Permission denied
+exists
+mkdir: cannot create directory ‘./Submissions/1701087570_4’: File exists
+1087570_4’: File exists
+xt file busy
+4: Text file busy
+‘./Submissions/1701087570_4’: File exists
+mkdir: cannot create directory ‘./Submissions/1701087570_4’: File exists
+sh: 1: ./Submissions/1701087569_4/exec1701087569_4: Text file busy
+e directory ‘./Submissions/1701087569_4’: File exists
+sh: 1: ./Submissions/1701087569_4/exec1701087569_/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':
+(.text+0x1b): undefined reference to `main'
+collect2: error: ld returned 1 exit status

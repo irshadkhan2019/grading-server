@@ -1,0 +1,7 @@
+compiler_err=0
+in_progress=0
+is_completed=1
+output_err=0
+pass=0
+q_pos=0
+runtime_err=1

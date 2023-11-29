@@ -33,7 +33,6 @@ std::string generateUniqueName(int id, long int timestamp)
     return oss.str();
 }
 
-// Update status.txt file to keep record of client request
 void storeKeys(string location,const string in_progress = "1",const string q_pos = "0",const string is_completed = "0",
                 const string compiler_err = "0",const string runtime_err = "0",const string output_err="0",const string pass = "0"
 ){
@@ -123,17 +122,22 @@ int check_user_status(string client_token,string key){
 
 void *handle_client_req(string client_token) 
 {
-    
+    // int newsockfd = *((int *)arg);
     cout<<"Serving by thread::"<<client_token<<endl;
     int n;
     char buffer[1024];
     
     int thread_id = pthread_self();
     time_t now = time(nullptr);
- 
+    // string unique_id = generateUniqueName(client_token, now); 
+  
+    // cout<<"client Token:"<<client_token<<endl;
     
     string client_files_dir="./Submissions/"+client_token+"/";
+    // string make_client_dir = "mkdir ./Submissions/"+client_token;
+    // system(make_client_dir.c_str());
 
+    // string client_files_dir="./Submissions/"+client_token+"/";
 
     string create_status_file_command="touch "+client_files_dir+"status.txt";
     system(create_status_file_command.c_str());
@@ -158,6 +162,8 @@ void *handle_client_req(string client_token)
     cout<<"RUN COMMAND"<<run_cmd<<endl;
     write(1,"Serving request",15);
     bzero(buffer, 1024); // set buffer to zero
+
+    // int fd = open(program_file.c_str(), O_WRONLY | O_TRUNC | O_CREAT, 0666);
    
    
         int stderr_fd = open(error_output_file.c_str(), O_WRONLY | O_CREAT, 0666);
@@ -200,7 +206,9 @@ void *handle_client_req(string client_token)
                     close(fd_out);
                     fd_out = open(output_file.c_str(), O_RDONLY);
                     out_bytesread = read(fd_out, out_buffer, 1024);
-
+                    // write(newsockfd, out_buffer, out_bytesread);
+//string location,const string in_progress = "1",const string q_pos = "0",const string is_completed = "0",
+               // const string compiler_err = "0",const string runtime_err = "0",const string pass = "0"
                     storeKeys(status_file_location.c_str(),"0","0","1","0","0","0","1");
                     close(fd_out);
                 } else {
@@ -215,7 +223,9 @@ void *handle_client_req(string client_token)
                     close(fd_out);
                     fd_out = open(diff_output_file.c_str(), O_RDONLY);
                     out_bytesread = read(fd_out, out_buffer, 1024);
-
+                    // write(newsockfd, out_buffer, out_bytesread);
+                    //string location,const string in_progress = "1",const string q_pos = "0",const string is_completed = "0",
+               // const string compiler_err = "0",const string runtime_err = "0",const string pass = "0"
                     storeKeys(status_file_location.c_str(),"0","0","1","0","0","1","0");
                     close(fd_out);
                 }
@@ -268,13 +278,13 @@ void *thread_function(void *arg) {
     while (true) {
         pthread_mutex_lock(&queue_mutex);
         while (request_queue.empty()) {
-           
+            // printf("Thread %d is waiting for requests to come\n", thread_id);
             pthread_cond_wait(&queue_cond, &queue_mutex);
         }
         client_token = request_queue.front();
         request_queue.pop();
         pthread_mutex_unlock(&queue_mutex);
-       
+        // printf("Thread %d is processing a request no %d \n", thread_id,newsockfd);
         cout<<"Client token in thread fn::"<<client_token;
         handle_client_req(client_token);
     }
@@ -351,9 +361,10 @@ int main(int argc, char *argv[]) {
         printf("Pushing request %d conn %d\n", req,*newsockfd); 
         req++;
         
+     
 
         // read data
-        // close client conection and send him response
+        // close lient conection and send him response
         string client_token = generateUniqueName(*newsockfd, now); 
 
         // save his program
@@ -397,6 +408,13 @@ int main(int argc, char *argv[]) {
             int output_err=check_user_status(status,"output_err");
 
             cout<<compiler_err<<in_progress<<is_completed<<output_err<<pass<<runtime_err<<endl;
+            // char my_response[50];
+            // strcpy(my_response, response.c_str());
+            // char buffer[20];  // Adjust the size based on your needs
+            // bzero(buffer,20);
+            // // Convert the integer to a string
+            // sprintf(buffer, "%d", in_progress);
+            // write(*newsockfd,buffer, sizeof(buffer));
 
             if(is_completed && pass){
                 string client_files_dir="./Submissions/"+string(status)+"/";
@@ -407,7 +425,7 @@ int main(int argc, char *argv[]) {
                     int out_bytesread = read(fd_out, out_buffer, 1024);
                     lseek(fd_out, 0, SEEK_SET);
                     ftruncate(fd_out, 0);
-               
+                    write(fd_out, "\nPASS : ", strlen("\nPASS : "));
                     write(fd_out, out_buffer, out_bytesread);
                     close(fd_out);
                     fd_out = open(output_file.c_str(), O_RDONLY);
@@ -419,10 +437,16 @@ int main(int argc, char *argv[]) {
                 string client_files_dir="./Submissions/"+string(status)+"/";
                 string error_output_file =client_files_dir+"err" + status + ".txt";
 
-                int fd_out = open(error_output_file.c_str(), O_RDONLY);
+                int fd_out = open(error_output_file.c_str(), O_RDWR);
                 char out_buffer[1024];
                 int out_bytesread = read(fd_out, out_buffer, 1024);
-             
+                lseek(fd_out, 0, SEEK_SET);
+                ftruncate(fd_out, 0);
+                write(fd_out, "\nCOMPILATION ERROR :\n ", strlen("\nCOMPILATION ERROR :\n "));
+                write(fd_out, out_buffer, out_bytesread);
+                close(fd_out);
+                fd_out = open(error_output_file.c_str(), O_RDONLY);
+                out_bytesread = read(fd_out, out_buffer, 1024);
                 write(*newsockfd, out_buffer, out_bytesread);
                 close(fd_out);
             }
@@ -435,7 +459,7 @@ int main(int argc, char *argv[]) {
                 int out_bytesread = read(fd_out, out_buffer, 1024);
                 lseek(fd_out, 0, SEEK_SET);
                 ftruncate(fd_out, 0);
-              
+                write(fd_out, "\nRUNTIME ERROR :\n ", strlen("\nRUNTIME ERROR :\n "));
                 write(fd_out, out_buffer, out_bytesread);
                 close(fd_out);
                 fd_out = open(error_output_file.c_str(), O_RDONLY);
@@ -453,7 +477,7 @@ int main(int argc, char *argv[]) {
                 int out_bytesread = read(fd_out, out_buffer, 1024);
                 lseek(fd_out, 0, SEEK_SET);
                 ftruncate(fd_out, 0);
-             
+                write(fd_out, "\nOUTPUT ERROR :\n", strlen("\nOUTPUT ERROR :\n"));
                 write(fd_out, out_buffer, out_bytesread);
                 close(fd_out);
                 fd_out = open(diff_output_file.c_str(), O_RDONLY);
@@ -465,6 +489,7 @@ int main(int argc, char *argv[]) {
             close(*newsockfd);
         }
       
+     
     }
 
     return 0;
