@@ -148,13 +148,7 @@ int main(int argc, char *argv[]) {
                     int fd_out = open(output_file.c_str(), O_RDWR);
                     char out_buffer[1024];
                     int out_bytesread = read(fd_out, out_buffer, 1024);
-                    lseek(fd_out, 0, SEEK_SET);
-                    ftruncate(fd_out, 0);
-                    write(fd_out, "\nPASS : ", strlen("\nPASS : "));
-                    write(fd_out, out_buffer, out_bytesread);
-                    close(fd_out);
-                    fd_out = open(output_file.c_str(), O_RDONLY);
-                    out_bytesread = read(fd_out, out_buffer, 1024);
+                  
                     write(*newsockfd, out_buffer, out_bytesread);
                     close(fd_out);
             }
@@ -165,13 +159,7 @@ int main(int argc, char *argv[]) {
                 int fd_out = open(error_output_file.c_str(), O_RDWR);
                 char out_buffer[1024];
                 int out_bytesread = read(fd_out, out_buffer, 1024);
-                lseek(fd_out, 0, SEEK_SET);
-                ftruncate(fd_out, 0);
-                write(fd_out, "\nCOMPILATION ERROR :\n ", strlen("\nCOMPILATION ERROR :\n "));
-                write(fd_out, out_buffer, out_bytesread);
-                close(fd_out);
-                fd_out = open(error_output_file.c_str(), O_RDONLY);
-                out_bytesread = read(fd_out, out_buffer, 1024);
+               
                 write(*newsockfd, out_buffer, out_bytesread);
                 close(fd_out);
             }
@@ -182,13 +170,7 @@ int main(int argc, char *argv[]) {
                 int fd_out = open(error_output_file.c_str(), O_RDWR);
                 char out_buffer[1024];
                 int out_bytesread = read(fd_out, out_buffer, 1024);
-                lseek(fd_out, 0, SEEK_SET);
-                ftruncate(fd_out, 0);
-                write(fd_out, "\nRUNTIME ERROR :\n ", strlen("\nRUNTIME ERROR :\n "));
-                write(fd_out, out_buffer, out_bytesread);
-                close(fd_out);
-                fd_out = open(error_output_file.c_str(), O_RDONLY);
-                out_bytesread = read(fd_out, out_buffer, 1024);
+            
                 write(*newsockfd, out_buffer, out_bytesread);
                 close(fd_out);
             }
@@ -200,13 +182,7 @@ int main(int argc, char *argv[]) {
                 int fd_out = open(diff_output_file.c_str(), O_RDWR);
                 char out_buffer[1024];
                 int out_bytesread = read(fd_out, out_buffer, 1024);
-                lseek(fd_out, 0, SEEK_SET);
-                ftruncate(fd_out, 0);
-                write(fd_out, "\nOUTPUT ERROR :\n", strlen("\nOUTPUT ERROR :\n"));
-                write(fd_out, out_buffer, out_bytesread);
-                close(fd_out);
-                fd_out = open(diff_output_file.c_str(), O_RDONLY);
-                out_bytesread = read(fd_out, out_buffer, 1024);
+               
                 write(*newsockfd, out_buffer, out_bytesread);
                 close(fd_out);
             }

@@ -152,9 +152,9 @@ to sin_addr.s_addr of serv_addr structure */
   */
 
   n = read(sockfd, buffer, 1024);
-  if((strcmp(check, "new") == 0)){
-        printf("Server response: %s\n", buffer);
-   }
+
+  printf("Server response: %s\n", buffer);
+   
 
 
   if((strcmp(check, "new") == 0)){
