@@ -107,15 +107,10 @@ void *handle_client_req(string client_token)
     
     int thread_id = pthread_self();
     time_t now = time(nullptr);
-    // string unique_id = generateUniqueName(client_token, now); 
-  
-    // cout<<"client Token:"<<client_token<<endl;
+
     
     string client_files_dir="./Submissions/"+client_token+"/";
-    // string make_client_dir = "mkdir ./Submissions/"+client_token;
-    // system(make_client_dir.c_str());
 
-    // string client_files_dir="./Submissions/"+client_token+"/";
 
     string create_status_file_command="touch "+client_files_dir+"status.txt";
     system(create_status_file_command.c_str());
@@ -141,8 +136,6 @@ void *handle_client_req(string client_token)
     write(1,"Serving request",15);
     bzero(buffer, 1024); // set buffer to zero
 
-    // int fd = open(program_file.c_str(), O_WRONLY | O_TRUNC | O_CREAT, 0666);
-   
    
         int stderr_fd = open(error_output_file.c_str(), O_WRONLY | O_CREAT, 0666);
         cout<<"STD_ERR"<<stderr_fd<<endl;
@@ -184,9 +177,7 @@ void *handle_client_req(string client_token)
                     close(fd_out);
                     fd_out = open(output_file.c_str(), O_RDONLY);
                     out_bytesread = read(fd_out, out_buffer, 1024);
-                    // write(newsockfd, out_buffer, out_bytesread);
-//string location,const string in_progress = "1",const string q_pos = "0",const string is_completed = "0",
-               // const string compiler_err = "0",const string runtime_err = "0",const string pass = "0"
+
                     storeKeys(status_file_location.c_str(),"0","0","1","0","0","0","1");
                     close(fd_out);
                 } else {
@@ -201,9 +192,7 @@ void *handle_client_req(string client_token)
                     close(fd_out);
                     fd_out = open(diff_output_file.c_str(), O_RDONLY);
                     out_bytesread = read(fd_out, out_buffer, 1024);
-                    // write(newsockfd, out_buffer, out_bytesread);
-                    //string location,const string in_progress = "1",const string q_pos = "0",const string is_completed = "0",
-               // const string compiler_err = "0",const string runtime_err = "0",const string pass = "0"
+
                     storeKeys(status_file_location.c_str(),"0","0","1","0","0","1","0");
                     close(fd_out);
                 }

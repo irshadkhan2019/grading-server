@@ -26,7 +26,7 @@ for ((i=1; i<=numClients; i++)); do
     ps -eLf | awk '$10 ~ /^\.\/server/'| head -1 | awk '{print $6 -1}' > ps_$i.log & 
 
     # Start the client in the background
-    ./client localhost 8080 program.c $loopNum $sleepTimeSeconds new >> "results_$i.txt" &
+    ./client localhost 9999 program.c $loopNum $sleepTimeSeconds new >> "results_$i.txt" &
 
     pids+=($!)
 done
