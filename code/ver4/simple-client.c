@@ -139,7 +139,10 @@ to sin_addr.s_addr of serv_addr structure */
 
   // client gets tokenId to check status
   n = read(sockfd, buffer, 1024);
-  printf("Server response: %s\n", buffer);
+   if((strcmp(check, "new") == 0)){
+        printf("Server response: %s\n", buffer);
+  }
+
 
   if((strcmp(check, "new") == 0)){
       n = write(sockfd, "new", 3); 
